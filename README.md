@@ -73,7 +73,7 @@ const todo_complete = tool({
 
 
 ### Example Use Cases
-1. **Personal Productivity Assistant (Todo List)**
+1. **Personal Productivity Assistant (To-do List)**
    - Add tools for:
      - todo_add — add a new task
      - todo_list — list all current tasks
