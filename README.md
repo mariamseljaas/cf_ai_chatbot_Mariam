@@ -9,7 +9,7 @@ You can try the deployed version here:
 👉 **https://blue-glitter-f486.ten22011.workers.dev/**
 
 To try the components added to this AI assistant, you can ask the bot to add tasks to your to-do list, list everything currently in your to-do list, or mark a task as completed. Just type naturally in the chat and the agent will guide you through each action.
-
+![Chatbot Screenshot](pic.png)
 ## Features
 - 📝 Custom To do List Tool (add/list/complete tasks)
 - 💬 Interactive chat interface with AI
