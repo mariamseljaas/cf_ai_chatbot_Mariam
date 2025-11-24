@@ -15,7 +15,7 @@ import { scheduleSchema } from "agents/schedule";
  */
 const getWeatherInformation = tool({
   description: "show the weather in a given city to the user",
-  inputSchema: z.object({ city: z.string() })
+  inputSchema: z.object({ city: z.string() }),
   // Omitting execute function makes this tool require human confirmation
 });
 
@@ -108,6 +108,47 @@ const cancelScheduledTask = tool({
   }
 });
 
+
+
+
+
+
+
+/**
+ * Add a task to todo list — requires confirmation
+ */
+const todo_add = tool({
+  description: "Add a task to the user's todo list",
+  inputSchema: z.object({
+    task: z.string()
+  })
+});
+
+/**
+ * List todo tasks — requires confirmation
+ */
+const todo_list = tool({
+  description: "List all the user's todo tasks",
+  inputSchema: z.object({})
+});
+
+/**
+ * Complete a task — requires confirmation
+ */
+const todo_complete = tool({
+  description: "Mark a todo task as completed",
+  inputSchema: z.object({
+    task: z.string()
+  })
+});
+
+
+
+
+
+
+
+
 /**
  * Export all available tools
  * These will be provided to the AI model to describe available capabilities
@@ -117,7 +158,10 @@ export const tools = {
   getLocalTime,
   scheduleTask,
   getScheduledTasks,
-  cancelScheduledTask
+  cancelScheduledTask,
+  todo_add,
+  todo_list,
+  todo_complete,
 } satisfies ToolSet;
 
 /**
@@ -129,5 +173,36 @@ export const executions = {
   getWeatherInformation: async ({ city }: { city: string }) => {
     console.log(`Getting weather information for ${city}`);
     return `The weather in ${city} is sunny`;
-  }
+  },
+
+ // Add to do
+ todo_add: async ({ task }, { storage }) => {
+  let todos = (await storage.get("todos")) || [];
+  todos.push({ task, done: false });
+  await storage.put("todos", todos);
+  return `Task added: "${task}"`;
+},
+
+// List to dos
+todo_list: async (_args, { storage }) => {
+  let todos = (await storage.get("todos")) || [];
+  if (todos.length === 0) return "Your todo list is empty.";
+  return todos
+    .map((t: any, i: number) => `${i + 1}. ${t.task} ${t.done ? "✓" : ""}`)
+    .join("\n");
+},
+
+// Complete to do
+todo_complete: async ({ task }, { storage }) => {
+  let todos = (await storage.get("todos")) || [];
+  const index = todos.findIndex(
+    (t: any) => t.task.toLowerCase() === task.toLowerCase()
+  );
+  if (index === -1) return `Task not found: "${task}"`;
+  todos[index].done = true;
+  await storage.put("todos", todos);
+  return `Task completed: "${task}"`;
+}
+
+
 };
