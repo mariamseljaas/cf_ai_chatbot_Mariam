@@ -81,7 +81,7 @@ const todo_complete = tool({
      - todo_add — add a new task
      - todo_list — list all current tasks
      - todo_complete — mark a task as completed
-  -Example interactions:
+  - Example interactions:
     -“Add a task to my todo list: study for exam”
     -“List my todo tasks”
     -“Mark ‘study for exam’ as completed”
