@@ -1,13 +1,11 @@
-# 🤖 Chat Agent Starter Kit
+# 🤖 Chat Agent - Mariam Custom AI Assistant (to do list)
 
-![npm i agents command](./npm-agents-banner.svg)
+This is a customized version of the Cloudflare Agents Starter Template, extended to include additional tools such as a to-do list
+The project demonstrates how to build a fully functional AI-powered assistant using Cloudflare Workers, Durable Objects, and the Agents API.
 
-<a href="https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents-starter"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare"/></a>
-
-A starter template for building AI-powered chat agents using Cloudflare's Agent platform, powered by [`agents`](https://www.npmjs.com/package/agents). This project provides a foundation for creating interactive chat experiences with AI, complete with a modern UI and tool integration capabilities.
 
 ## Features
-
+- 📝 Custom Todo List Tool (add/list/complete tasks)
 - 💬 Interactive chat interface with AI
 - 🛠️ Built-in tool system with human-in-the-loop confirmation
 - 📅 Advanced task scheduling (one-time, delayed, and recurring via cron)
@@ -67,6 +65,24 @@ npm run deploy
 ```
 
 ## Customization Guide
+This version includes several new tools built for this project:
+
+✅ Todo List Tool
+
+Stored inside Durable Object storage.
+
+const todo_add = tool({
+  description: "Add a task to the user's todo list",
+  inputSchema: z.object({ task: z.string() })
+});
+
+📋 Confirmed Executions
+todo_add: async ({ task }, { storage }) => {
+  let todos = (await storage.get("todos")) || [];
+  todos.push({ task, done: false });
+  await storage.put("todos", todos);
+  return `Task added: "${task}"`;
+},
 
 ### Adding New Tools
 
