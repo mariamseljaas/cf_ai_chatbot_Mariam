@@ -82,9 +82,10 @@ const todo_complete = tool({
      - todo_list — list all current tasks
      - todo_complete — mark a task as completed
    - Example interactions:
-    -“Add a task to my todo list: study for exam”
-    -“List my todo tasks”
-    -“Mark ‘study for exam’ as completed”
+    - “Add a task to my todo list: study for exam”
+    - “List my todo tasks”
+    - “Mark ‘study for exam’ as completed”
+  
   This functionality uses Durable Object storage to persist tasks across sessions.
 
 2. **Customer Support Agent**
